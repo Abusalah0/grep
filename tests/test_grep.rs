@@ -887,6 +887,15 @@ fn null_filename_separator() {
 }
 
 #[test]
+fn null_separator_applies_to_normal_filename_prefixes() {
+    let (scene, mut c) = ucmd();
+    scene.fixtures.write("f", "x\n");
+    c.args(&["-Z", "-H", "x", "f"])
+        .succeeds()
+        .stdout_is_bytes(b"f\0x\n");
+}
+
+#[test]
 fn after_before_combined_context() {
     let input = "a\nb\nMATCH\nc\nd\n";
 
